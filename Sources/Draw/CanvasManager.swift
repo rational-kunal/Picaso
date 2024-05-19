@@ -16,8 +16,8 @@ public class CanvasManager {
 
     private var isCanvasActive: Bool { self.canvasWindow.windowScene != nil }
 
-    // Default initialization
-    // - Shortcut "x" to toggle canvas
+    /// Default initialization
+    /// - Shortcut "x" to toggle canvas
     public static func defaultInitialization() {
         ShortcutManager.sharedInstance.registerShortcut(withKey: Constants.ToggleCanvasDefaultShortcutKey,
                                                         action: {

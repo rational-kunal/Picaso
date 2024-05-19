@@ -38,10 +38,6 @@ internal class ShortcutManager {
         return ShortcutManager()
     }()
 
-    private init() {
-        
-    }
-
     public func registerShortcut(withKey key: String, action: @escaping () -> Void) {
         actionsForKeyInputs[key] = action
     }
@@ -60,6 +56,7 @@ internal class ShortcutManager {
     }
 }
 
+// Handle siwizzling: Just call `performSwizzling()`
 private extension ShortcutManager {
     // Performs swizzle only once
     private static func performSwizzling() {
@@ -79,19 +76,15 @@ private extension ShortcutManager {
             return
         }
         
-        let didAddMethod = class_addMethod(UIApplication.self,
-                                           originalSelector,
+        let didAddMethod = class_addMethod(UIApplication.self, originalSelector,
                                            method_getImplementation(swizzledMethod),
                                            method_getTypeEncoding(swizzledMethod))
         
         if didAddMethod {
-            // If the original method doesn't exist, add it and use swizzledMethod
-            class_replaceMethod(UIApplication.self,
-                                swizzledSelector,
+            class_replaceMethod(UIApplication.self, swizzledSelector,
                                 method_getImplementation(originalMethod),
                                 method_getTypeEncoding(originalMethod))
         } else {
-            // If the original method already exists, swap their implementations
             method_exchangeImplementations(originalMethod, swizzledMethod)
         }
     }
