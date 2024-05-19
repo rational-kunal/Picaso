@@ -26,7 +26,7 @@ fileprivate extension UIEvent {
     }
 }
 
-internal class ShortcutManager {
+class ShortcutManager {
     private var actionsForKeyInputs: [String: () -> Void] = [:]
 
     static let initializeOnce = {
@@ -38,6 +38,8 @@ internal class ShortcutManager {
         return ShortcutManager()
     }()
 
+    // Registers a action to be performed when "key" is presseed by user
+    // Note: This will override existing action for the "key"
     public func registerShortcut(withKey key: String, action: @escaping () -> Void) {
         actionsForKeyInputs[key] = action
     }
@@ -57,6 +59,7 @@ internal class ShortcutManager {
 }
 
 // Handle siwizzling: Just call `performSwizzling()`
+// Expect call to `ShortcutManager.interceptedSendEvent(_: UIEvent)` when any event is performed on `UIApplication`.
 private extension ShortcutManager {
     // Performs swizzle only once
     private static func performSwizzling() {

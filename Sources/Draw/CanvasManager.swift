@@ -1,17 +1,12 @@
 import UIKit
 
 public class CanvasManager {
-
     public static let sharedInstance = {
         return CanvasManager()
     }()
 
     private lazy var canvasWindow: UIWindow = {
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        window.isHidden = false
-//        window.windowLevel = .statusBar
-        window.backgroundColor = .yellow
-        return window
+        return UIWindow(frame: UIScreen.main.bounds)
     }()
 
     private var isCanvasActive: Bool { self.canvasWindow.windowScene != nil }

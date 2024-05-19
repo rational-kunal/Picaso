@@ -8,8 +8,7 @@ enum CanvasState: Equatable {
     case None, InitialDrawing, Editing(CanvasStateEditing)
 }
 
-internal class CanvasView: UIView {
-
+class CanvasView: UIView {
     private var borderRectangle: CGRect = .zero
     private var canvasState: CanvasState = .None
 
@@ -38,7 +37,7 @@ internal class CanvasView: UIView {
             }
 
             canvasState = .Editing(editingState)
-            updateBorderRadius(forTouchPoint: touchPoint, editingState: editingState)
+            updateBorderDimension(forTouchPoint: touchPoint, editingState: editingState)
         }
     }
 
@@ -52,7 +51,7 @@ internal class CanvasView: UIView {
         case .InitialDrawing:
             borderRectangle.bottomRight = touchPoint
         case .Editing(let canvasStateEditing):
-            updateBorderRadius(forTouchPoint: touchPoint, editingState: canvasStateEditing)
+            updateBorderDimension(forTouchPoint: touchPoint, editingState: canvasStateEditing)
         }
 
         setNeedsDisplay()
@@ -84,7 +83,7 @@ internal class CanvasView: UIView {
         roundedRectangle.stroke()
     }
 
-    private func updateBorderRadius(forTouchPoint touchPoint: CGPoint, editingState: CanvasStateEditing) {
+    private func updateBorderDimension(forTouchPoint touchPoint: CGPoint, editingState: CanvasStateEditing) {
         guard canvasState == .Editing(editingState) else { return }
         switch editingState {
         case .None:
