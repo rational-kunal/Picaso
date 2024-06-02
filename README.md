@@ -1,4 +1,4 @@
-# Draw
+# Picaso
 
 <b>Checkout article at: https://dev.to/rationalkunal/lets-highlight-5lc</b>
 
